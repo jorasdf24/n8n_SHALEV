@@ -46,6 +46,11 @@ COPY docker-entrypoint.sh /
 RUN \
 	mkdir .n8n && \
 	chown node:node .n8n
+
+RUN npm install -g pnpm@8.14.3 \
+	&& pnpm install --frozen-lockfile \
+	&& pnpm run build
+	
 ENV SHELL /bin/sh
 USER node
 ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
